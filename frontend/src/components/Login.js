@@ -15,13 +15,15 @@ function Login() {
     const onFinish = (values) => {
         console.log('Success:', values);
         if (values.username === "admin" && values.password === "admin"){
-            let data = {
+            console.log(values.favoriteMovie)
+            axios.post("http://localhost:3001/list",{
                 movie : values.favoriteMovie
-            }
-            axios.post("http://localhost:3001/list",data).then((res) => {
+            }).then((res) => {
                 message.success(res.data);
                 console.log(res.data);
             })
+        }else{
+            message.error("Invalid User");
         }
     };
 
@@ -58,7 +60,7 @@ function Login() {
                         <Form.Item
                             label="Favorite Movie"
                             name="favoriteMovie"
-                            rules={[{ required: true, message: 'Please input your Favorite Movie!' }]}
+                            rules={[{ required: false, message: 'Please input your Favorite Movie!' }]}
                         >
                             <Input />
                         </Form.Item>
